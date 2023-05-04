@@ -13,10 +13,12 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "babel:build": "babel src --out-dir lib --extensions .ts,.js,.tsx,.jsx,.cjs,.mjs --presets=@babel/preset-typescript,@babel/preset-env,@babel/preset-react",
+    "server:start": "node ./lib/server.js",
+    "start": "npm run babel:build && npm run server:start"
   },
   "eslintConfig": {
     "extends": [
