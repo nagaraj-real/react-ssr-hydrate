@@ -8,8 +8,6 @@ export const AsyncPost = () => {
 
     return <>
         <h2>Posts</h2>
-        <Suspense fallback={<h2>...loading</h2>}>
-            <PostData />
-        </Suspense>
+        <PostData />
     </>
 }

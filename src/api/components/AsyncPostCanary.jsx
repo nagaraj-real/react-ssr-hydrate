@@ -13,8 +13,6 @@ export const AsyncPostCanary = async () => {
 
     return <>
         <h2>Posts</h2>
-        <Suspense fallback={<h2>...loading</h2>}>
-            <Post data={data} error={error} />
-        </Suspense>
+        <Post data={data} error={error} />
     </>
 }
