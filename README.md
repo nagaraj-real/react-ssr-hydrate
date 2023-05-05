@@ -1,31 +1,28 @@
-.
-
 ## Available Scripts
 
 In the project directory, you can run:
 
 ### `npm start`
 
-Runs the app in the development mode.\
+Runs the app in development mode.\
 Open [http://localhost:3001/home](http://localhost:3001/home) to view it in your browser.
 
-## React Sever Side Rendering
+## React Server-Side Rendering
 
-All components in this App are rendered on the server side. Hence, we do not need any Javascript to be enabled on browser to run this App. Node Streaming is used to deliver the html content to the browser.
-The main goal of this App is to showcase how suspense can be used in the current and expermimental(Canary) versions of react.
+All components are rendered on the server side. Hence, we do not need Javascript to be enabled on a browser to run this App. Node Streaming is used to deliver the HTML content to the browser.
+The main goal of this App is to showcase how suspense can be used in the current/experimental (Canary) versions of React.
 
-# API
+## API
 
-We are using JSON placeholder APIs for this demo. A delay of 5000ms is forced on these APIs to trigger suspense and show loading state.
+We are using JSON placeholder APIs for this demo. A delay of 5000ms is forced on these APIs to trigger suspense and show a loading state.
 
 https://jsonplaceholder.typicode.com/todos/${id}/?_delay=5000
 
-# React 18 Suspense
+## React 18 Suspense
 
-In the current stable release, the only way to trigger a suspense is to throw a promise.
-This will cause the component to get unmounted and mounted again once promise is resolved.
-To achieve this, we are using a HOC 'withSuspensePromise' which accepts a promise, throws it
-and tries to resolve. The component passed in is decorated with result or error.
+In the current stable release, the only way to trigger suspense is to throw a promise.
+This will cause the component to get unmounted and mounted again once the promise is resolved.
+To achieve this, we are using a HOC 'withSuspensePromise' which accepts a promise, throws it, and tries to resolve it. The component passed in is decorated with a result or error.
 
 Refer AsyncPost component.
 
@@ -52,11 +49,11 @@ export const withSuspensePromise = (Component, promise) => {
 };
 ```
 
-# React Expermiental Suspense
+## React Expermiental Suspense
 
-In the the experimental version of React, we have the option to use Async Components.
+In the experimental version of React, we have the option to use Async Components.
 Yes, we will be able to use our Async/Await syntax to fetch the data just like any node server application.
-The same Async Component can be wrapped inside Suspense. React does the suspension and mounting automatically for us. This is the recommended way to use Suspense if we are creating our own API fetching logic.
+The same Async Component can be wrapped inside Suspense. React does the suspension and mounting automatically for us. This is the recommended way to use Suspense if we are creating our API fetching logic.
 
 Refer AsyncPostCanary component.
 
