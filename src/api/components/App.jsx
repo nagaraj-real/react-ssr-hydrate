@@ -1,5 +1,5 @@
 import { Form } from "../../components/Form";
-import { Header } from "../../components/Header";
+import { Header } from "./Header";
 import { PostContainer } from "./PostContainer";
 import React from "react";
 export default function App() {
