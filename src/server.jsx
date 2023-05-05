@@ -17,4 +17,4 @@ app.use('/home', (request, response) => {
   });
 });
 
-app.listen(3001, () => { console.log('ready') })
+app.listen(3001, () => { console.log('listening at 3001') })
