@@ -6,8 +6,8 @@ export function PostContainer() {
         <h3>Server Post</h3>
 
         <Suspense fallback={<h2>...loading</h2>}>
-            <AsyncPost />
-            {/* <AsyncPostCanary /> */}
+            {/* <AsyncPost /> */}
+            <AsyncPostCanary />
         </Suspense>
     </>
 }
