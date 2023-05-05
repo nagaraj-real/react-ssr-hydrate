@@ -1,6 +1,4 @@
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+.
 
 ## Available Scripts
 
@@ -9,62 +7,79 @@ In the project directory, you can run:
 ### `npm start`
 
 Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Open [http://localhost:3001/home](http://localhost:3001/home) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## React Sever Side Rendering
 
-### `npm test`
+All components in this App are rendered on the server side. Hence, we do not need any Javascript to be enabled on browser to run this App. Node Streaming is used to deliver the html content to the browser.
+The main goal of this App is to showcase how suspense can be used in the current and expermimental(Canary) versions of react.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# API
 
-### `npm run build`
+We are using JSON placeholder APIs for this demo. A delay of 5000ms is forced on these APIs to trigger suspense and show loading state.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+https://jsonplaceholder.typicode.com/todos/${id}/?_delay=5000
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+# React 18 Suspense
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+In the current stable release, the only way to trigger a suspense is to throw a promise.
+This will cause the component to get unmounted and mounted again once promise is resolved.
+To achieve this, we are using a HOC 'withSuspensePromise' which accepts a promise, throws it
+and tries to resolve. The component passed in is decorated with result or error.
 
-### `npm run eject`
+Refer AsyncPost component.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```jsx
+export const withSuspensePromise = (Component, promise) => {
+  let data, error;
+  promise
+    .then((response) => {
+      return response.json();
+    })
+    .then((result) => {
+      data = result;
+    })
+    .catch((ex) => {
+      error = ex;
+    });
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+  return ({ props }) => {
+    if (!data && !error) {
+      throw promise;
+    }
+    return <Component {...props} data={data} error={error} />;
+  };
+};
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+# React Expermiental Suspense
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+In the the experimental version of React, we have the option to use Async Components.
+Yes, we will be able to use our Async/Await syntax to fetch the data just like any node server application.
+The same Async Component can be wrapped inside Suspense. React does the suspension and mounting automatically for us. This is the recommended way to use Suspense if we are creating our own API fetching logic.
 
-## Learn More
+Refer AsyncPostCanary component.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```jsx
+export const AsyncPostCanary = async () => {
+  const id = Math.floor(Math.random() * 200);
+  let result, data, error;
+  try {
+    result = await fetch(
+      `https://jsonplaceholder.typicode.com/todos/${id}/?_delay=5000`
+    );
+    data = await result.json();
+  } catch (ex) {
+    error = ex;
+  }
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+  return (
+    <>
+      <h2>Posts</h2>
+      <Suspense fallback={<h2>...loading</h2>}>
+        <Post data={data} error={error} />
+      </Suspense>
+    </>
+  );
+};
+```
