@@ -1,21 +1,23 @@
 {
-  "name": "reactssr",
-  "version": "0.1.0",
+  "name": "my-webpack-project",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@babel/cli": "^7.0.0",
-    "@babel/core": "^7.21.8",
-    "@babel/preset-env": "^7.21.5",
     "@babel/preset-react": "^7.18.6",
     "express": "^4.18.2",
     "react": "^0.0.0-experimental-aef7ce554-20230503",
     "react-dom": "^0.0.0-experimental-aef7ce554-20230503",
-    "web-vitals": "^2.1.4"
+    "react-server-dom-webpack": "^0.0.0-experimental-aef7ce554-20230503"
   },
   "scripts": {
     "babel:build": "babel src --out-dir dist --extensions .ts,.js,.tsx,.jsx,.cjs,.mjs --presets=@babel/preset-env,@babel/preset-react",
     "server:start": "node ./dist/server.js",
-    "start": "npm run babel:build && npm run server:start"
+    "start": "npm run build:dev && npm run babel:build && npm run server:start",
+    "build": "webpack --mode=production --node-env=production",
+    "build:dev": "webpack --mode=development",
+    "build:prod": "webpack --mode=production --node-env=production",
+    "watch": "webpack --watch"
   },
   "eslintConfig": {
     "extends": [
@@ -34,5 +36,19 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "devDependencies": {
+    "@babel/core": "^7.21.8",
+    "@babel/preset-env": "^7.21.5",
+    "@webpack-cli/generators": "^3.0.2",
+    "autoprefixer": "^10.4.14",
+    "babel-loader": "^9.1.2",
+    "css-loader": "^6.7.3",
+    "postcss": "^8.4.23",
+    "postcss-loader": "^7.3.0",
+    "style-loader": "^3.3.2",
+    "webpack": "^5.82.0",
+    "webpack-cli": "^5.0.2"
+  },
+  "description": "My webpack project"
 }
