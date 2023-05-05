@@ -1,4 +1,5 @@
 
+"use client"
 import React, { useState } from "react";
 export const Form = () => {
     const [search, setSearch] = useState('');
