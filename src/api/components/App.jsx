@@ -1,4 +1,5 @@
-import { Form } from "../../components/Form";
+
+import ClientForm from "../../components/ClientForm";
 import { Header } from "./Header";
 import { PostContainer } from "./PostContainer";
 import React from "react";
@@ -14,7 +15,7 @@ export default function App() {
         <Header />
         <main>
           <PostContainer />
-          <Form />
+          <ClientForm data={'This is Static data from parent RSC'} />
         </main>
       </body>
     </html>
