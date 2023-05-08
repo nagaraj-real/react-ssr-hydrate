@@ -1,9 +1,12 @@
 
 "use client"
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { ThemeContext } from "./ThemeProvider";
 
 
 export const Form = ({ data }) => {
+    const context = useContext(ThemeContext);
+    console.log('context', context);
     const [search, setSearch] = useState('');
     const [result, setResult] = useState('')
 
@@ -27,6 +30,7 @@ export const Form = ({ data }) => {
                 <output>Submitted Value - {result}</output>
             </div>}
         </form>
+        <p>The colour from Theme Context is {context}</p>
     </>)
 
 }

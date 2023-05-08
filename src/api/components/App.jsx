@@ -1,5 +1,6 @@
 
 import ClientForm from "../../components/ClientForm";
+import ClientThemeProvider from "../../components/ClientThemeProvider";
 import { Header } from "./Header";
 import { PostContainer } from "./PostContainer";
 import React from "react";
@@ -14,8 +15,10 @@ export default function App() {
       <body>
         <Header />
         <main>
-          <PostContainer />
-          <ClientForm data={'This is Static data from parent RSC'} />
+          <ClientThemeProvider>
+            <PostContainer />
+            <ClientForm data={'This is Static data from parent RSC'} />
+          </ClientThemeProvider>
         </main>
       </body>
     </html>
