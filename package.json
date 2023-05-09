@@ -6,9 +6,9 @@
     "@babel/cli": "^7.0.0",
     "@babel/preset-react": "^7.18.6",
     "express": "^4.18.2",
-    "react": "^0.0.0-experimental-aef7ce554-20230503",
-    "react-dom": "^0.0.0-experimental-aef7ce554-20230503",
-    "react-server-dom-webpack": "^0.0.0-experimental-aef7ce554-20230503"
+    "react": "^18.3.0-canary-16d053d59-20230506",
+    "react-dom": "^18.3.0-canary-16d053d59-20230506",
+    "react-server-dom-webpack": "^18.3.0-canary-16d053d59-20230506"
   },
   "scripts": {
     "babel:build": "babel src --out-dir dist --extensions .ts,.js,.tsx,.jsx,.cjs,.mjs --presets=@babel/preset-env,@babel/preset-react",

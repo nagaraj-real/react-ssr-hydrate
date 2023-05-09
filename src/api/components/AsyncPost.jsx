@@ -1,16 +1,14 @@
 import React from "react"
-import { Post } from "./Post"
+import fetchData from "../../fetch-data";
+import Post from "../../components/Post";
 
-export const AsyncPost = async () => {
-    let result, data, error;
-    try {
-        result = await fetch(`https://jsonplaceholder.typicode.com/todos/10/?_delay=5000`);
-        data = await result.json();
-    } catch (ex) {
-        error = ex
-    }
+const ServerPost = async () => {
+    let result, error;
+    result = await fetchData();
 
     return <>
-        <Post data={data} error={error} />
+        {<Post data={result} error={error} />}
     </>
 }
+
+export const AsyncPost = React.memo(ServerPost);
