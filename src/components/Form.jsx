@@ -24,7 +24,7 @@ export const Form = ({ data }) => {
         <p>Static data from parent server component - {data}</p>
         <form onSubmit={handleSubmit}>
 
-            <input name="search" value={search} onChange={onchange}></input>
+            <input placeholder="Enter text" style={{ borderColor: context }} name="search" value={search} onChange={onchange}></input>
             <input type="submit" value="Submit" />
             {result && <div>
                 <output>Submitted Value - {result}</output>
